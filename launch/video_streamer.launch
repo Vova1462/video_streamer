@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <group ns="uav">
+    <node pkg="video_streamer" name="video_streamer" type="video_streamer_node.py" output="screen"/>
+    <node pkg="web_video_server" name="web_video_server" type="web_video_server" />
+  </group>
+</launch>
