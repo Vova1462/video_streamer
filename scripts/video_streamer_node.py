@@ -12,6 +12,8 @@ def main():
     img_pub = rospy.Publisher("/image_raw", Image, queue_size=10)
     bridge = CvBridge()
     video = cv2.VideoCapture(0)
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter('/home/student/Video/out.avi', fourcc, 20.0, (1980, 1080))
     fps = video.get(cv2.CAP_PROP_FPS)
     rate = rospy.Rate(fps)
     while not rospy.is_shutdown() and video.grab():
@@ -22,6 +24,9 @@ def main():
             break
 
         try:
+            img = cv2.flip(img, -1)
+            img = cv2.blur(img, (5, 5))
+            out.write(img)
             # Publish image.
             img_msg = bridge.cv2_to_imgmsg(img, encoding="bgr8")
             img_msg.header.stamp = rospy.Time.now()
