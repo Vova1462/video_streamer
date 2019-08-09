@@ -3,7 +3,6 @@ import rospy
 import cv2
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import CameraInfo
-
 from cv_bridge import CvBridge, CvBridgeError
 
 
@@ -13,7 +12,7 @@ def main():
     bridge = CvBridge()
     video = cv2.VideoCapture(0)
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter('/home/student/Video/out.avi', fourcc, 20.0, (1980, 1080))
+    out = cv2.VideoWriter('/home/ubuntu/disk/out.avi', fourcc, 30.0, (1980, 1080))
     fps = video.get(cv2.CAP_PROP_FPS)
     rate = rospy.Rate(fps)
     while not rospy.is_shutdown() and video.grab():
