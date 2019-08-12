@@ -1,7 +1,26 @@
 <?xml version="1.0"?>
 <launch>
+  <arg name="video" default="0" />
+  <arg name="video_width" default="1980" />
+  <arg name="video_height" default="1080" />
+  <arg name="video_codec" default="XVID" />
+  <arg name="video_path" default="/home/vladimir/Documents/grid_[timestamp].avi" />
+  <arg name="video_topic" default="/image_raw" />
+  <arg name="video_fps" default="30.0"/>
+
+  <node name="cv_camera" pkg="cv_camera" type="cv_camera_node" output="screen" required="true"/>
+
   <group ns="uav">
-    <node pkg="video_streamer" name="video_streamer" type="video_streamer_node.py" output="screen"/>
+    <node pkg="video_streamer" name="video_streamer" type="video_streamer_node.py" output="screen">
+      <param name="output_width" type="int" value="$(arg video_width)" />
+      <param name="output_height" type="int" value="$(arg video_height)" />
+      <param name="output_format" value="$(arg video_codec)" />
+      <param name="output_path" value="$(arg video_path)" />
+      <param name="output_topic" value="$(arg video_topic)" />
+      <param name="output_fps" value="$(arg video_fps)" />
+      <param name="source1" value="/cv_camera/image_raw,0,0,1980,1080" />
+    </node>
     <node pkg="web_video_server" name="web_video_server" type="web_video_server" />
+
   </group>
 </launch>
